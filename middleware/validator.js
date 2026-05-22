@@ -15,7 +15,7 @@ const bookClubValidationRules = () => {
             .isString()
             .trim()
             .isIn(validMonths)
-            .withMessage('Month is required'),
+            .withMessage('Month is required and must be January - December'),
 
         body('host')
             .notEmpty()
@@ -37,6 +37,44 @@ const bookClubValidationRules = () => {
     ]
 };
 
+const memberValidationRules = () => {
+    return [    
+        body('firstName')
+            .notEmpty()
+            .isString()
+            .trim()
+            .withMessage('First name is required'),
+        body('lastName')
+            .notEmpty()
+            .isString()
+            .trim()
+            .withMessage('Last name is required'),
+        body('email')
+            .notEmpty()
+            .isEmail()
+            .normalizeEmail()
+            .withMessage('Valid email is required'),
+        body('phoneNumber')
+            .notEmpty()
+            .isString()
+            .trim()
+            .withMessage('Phone number is required, format XXX-XXX-XXXX'),
+        body('address')
+            .notEmpty()
+            .isString()
+            .trim()
+            .withMessage('Address is required'),
+        body('lengthOfMembership')
+            .notEmpty()
+            .isInt()
+            .withMessage('Length of membership is required'),
+        body('hostedIn2026')
+            .notEmpty()
+            .isBoolean()
+            .withMessage('Hosted in 2026 is required and must be true or false')
+    ]
+};
+
 const validate = (req, res, next) => {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -52,5 +90,6 @@ const validate = (req, res, next) => {
 
 module.exports = {
     bookClubValidationRules,
+    memberValidationRules,
     validate
 }

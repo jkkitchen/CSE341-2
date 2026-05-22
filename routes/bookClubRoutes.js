@@ -30,7 +30,7 @@ bookClubRouter.put('/:id',
             description: 'Updated book club information',
             required: true,
             schema: {
-                month: 'any',
+                month: 'January - December',
                 host: 'any',
                 bookTitle: 'any',
                 bookAuthor: 'any'
