@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const { connectDB } = require('./db/connect');
 const app = express();
-const contactsRoute = require('./routes/bookClubRoutes')
+const bookClubRoutes = require('./routes/bookClubRoutes')
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
 
