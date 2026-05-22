@@ -5,7 +5,7 @@
     "description": "Week 3 Assignment",
     "version": "1.0.0"
   },
-  "host": "https://cse341-2-ccuc.onrender.com",
+  "host": "cse341-2-ccuc.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"

@@ -5,7 +5,7 @@ const doc = {
     title: 'CSE 341 Week 3 Project API Documentation',
     description: 'Week 3 Assignment'
   },
-    host: 'https://cse341-2-ccuc.onrender.com', //Render URL
+    host: 'cse341-2-ccuc.onrender.com', //Render URL
     schemes: ['https']    
 };
 
