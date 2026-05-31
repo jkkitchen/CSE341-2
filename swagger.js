@@ -12,6 +12,9 @@ const doc = {
 const outputFile = './swagger-output.json';
 
 //Endpoint is server.js because routes are listed there
-const endpointsFiles = ['./server.js'];
+const endpointsFiles = [
+  './routes/bookClubRoutes.js',
+  './routes/membersRoutes.js'
+];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
