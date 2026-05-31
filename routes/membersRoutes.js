@@ -9,12 +9,15 @@ const {
 } = require('../controllers/membersController');
 const { memberValidationRules, validate } = require('../middleware/validator')
 const { isAuthenticated } = require("../middleware/authenticate");
+/* #swagger.tags = ['Members'] */ //Need these so api-docs will generate routes correctly
 
 //GET route for all members
 membersRouter.get('/', isAuthenticated, getAllMembers);
+/* #swagger.path = '/members' */
 
 //GET route for single member
 membersRouter.get('/:id', isAuthenticated, getSingleMember);
+/* #swagger.path = '/members/{id}' */
 
 //POST route to create new member
 membersRouter.post(
@@ -23,6 +26,7 @@ membersRouter.post(
     memberValidationRules(),
     validate,
     createMember);
+/* #swagger.path = '/members' */
 
 //PUT route to update a member
 membersRouter.put('/:id',
@@ -46,8 +50,10 @@ membersRouter.put('/:id',
     memberValidationRules(),
     validate,
     updateMember);
+/* #swagger.path = '/members/{id}' */
 
 //DELETE route to delete a member
 membersRouter.delete('/:id', isAuthenticated, deleteMember);
+/* #swagger.path = '/members/{id}' */
 
 module.exports = membersRouter;
