@@ -5,9 +5,14 @@ const passport = require('passport');
 router.use('/bookClub', require('./bookClubRoutes'));
 router.use('/members', require('./membersRoutes'));
 
-router.get('/login', passport.authenticate('github'), (req, res) => { });
+router.get('/login',
+    /* #swagger.ignore = true */
+    passport.authenticate('github')
+);
 
-router.get('/logout', function (req, res, next) {
+router.get('/logout',
+    /* #swagger.ignore = true */
+    function (req, res, next) {
     req.logout(function (err) {
         if (err) {
             return next(err);

@@ -2,9 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const { connectDB } = require('./db/connect');
 const app = express();
-const indexRoute = require('./routes/index');
-const bookClubRoutes = require('./routes/bookClubRoutes');
-const membersRoutes = require('./routes/membersRoutes');
+const indexRouter = require('./routes/index');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
 const passport = require('passport');
@@ -14,6 +12,9 @@ const cors = require('cors');
 
 //Get port from .env file
 const port = process.env.PORT || 3000;
+
+//FOR RENDER AND PASSPORTAUTH/SESSIONS
+app.set('trust proxy', 1); //helps OAuth to not randomly fail
 
 //MIDDLEWARE: MUST PUT THIS BEFORE ROUTES OR POST WILL NOT WORK
 app
@@ -31,7 +32,7 @@ app
     .use(passport.session())
     //CORS (allows frontend and backend to run on different ports, acts as a security boundary)
     .use(cors())
-    .use("/", require("./routes"));
+    
 
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
@@ -52,13 +53,17 @@ passport.deserializeUser((user, done) => {
     done(null, user);
 });
 
-app.get('/', (req, res) => {
+app.get('/',
+    /* #swagger.ignore = true */
+    (req, res) => {
     res.send(req.session.user //condition
         ? `Logged in as ${req.session.user.username || req.session.user.login}` //if true
         : "Logged Out") //if false
 });
 
-app.get('/github/callback', passport.authenticate('github', {
+app.get('/github/callback',
+    /* #swagger.ignore = true */
+    passport.authenticate('github', {
     failureRedirect: '/api-docs', session: false}),
     (req, res) => {
         req.session.user = req.user;
@@ -66,10 +71,9 @@ app.get('/github/callback', passport.authenticate('github', {
     }
 );
 
+
 //ROUTES
-app.use('/', indexRoute);
-app.use('/bookClub', bookClubRoutes);
-app.use('/members', membersRoutes);
+app.use('/', indexRouter);
 
 
 //SWAGGER: API DOCUMENTATION
