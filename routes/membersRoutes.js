@@ -8,16 +8,18 @@ const {
     deleteMember
 } = require('../controllers/membersController');
 const { memberValidationRules, validate } = require('../middleware/validator')
+const { isAuthenticated } = require("../middleware/authenticate");
 
 //GET route for all members
-membersRouter.get('/', getAllMembers);
+membersRouter.get('/', isAuthenticated, getAllMembers);
 
 //GET route for single member
-membersRouter.get('/:id', getSingleMember);
+membersRouter.get('/:id', isAuthenticated, getSingleMember);
 
 //POST route to create new member
 membersRouter.post(
     '/',
+    isAuthenticated,
     memberValidationRules(),
     validate,
     createMember);
@@ -40,11 +42,12 @@ membersRouter.put('/:id',
             }
         }
     */
+    isAuthenticated,
     memberValidationRules(),
     validate,
     updateMember);
 
 //DELETE route to delete a member
-membersRouter.delete('/:id', deleteMember);
+membersRouter.delete('/:id', isAuthenticated, deleteMember);
 
 module.exports = membersRouter;

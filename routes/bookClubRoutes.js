@@ -7,7 +7,8 @@ const {
     updateBookClubMonth,
     deleteBookClubMonth
 } = require('../controllers/bookClubController');
-const { bookClubValidationRules, validate } = require('../middleware/validator')
+const { bookClubValidationRules, validate } = require('../middleware/validator');
+const { isAuthenticated } = require("../middleware/authenticate");
 
 //GET route for all book club months
 bookClubRouter.get('/', getAllBookClubMonths);
@@ -18,6 +19,7 @@ bookClubRouter.get('/:id', getOneBookClubMonth);
 //POST route to create new book club entry
 bookClubRouter.post(
     '/',
+    isAuthenticated,
     bookClubValidationRules(),
     validate,
     createBookClubMonth);
@@ -37,11 +39,12 @@ bookClubRouter.put('/:id',
             }
         }
     */
+    isAuthenticated,
     bookClubValidationRules(),
     validate,
     updateBookClubMonth);
 
 //DELETE route to delete a book club entry
-bookClubRouter.delete('/:id', deleteBookClubMonth);
+bookClubRouter.delete('/:id', isAuthenticated, deleteBookClubMonth);
 
 module.exports = bookClubRouter;

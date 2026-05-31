@@ -5,8 +5,8 @@ const doc = {
     title: 'CSE 341 Week 3 Project API Documentation',
     description: 'Week 3 Assignment'
   },
-    host: 'cse341-2-ccuc.onrender.com', //Render URL
-    schemes: ['https']    
+    host: process.env.SWAGGER_HOST, //this way it will switch between local hosting and render
+    schemes: [process.env.SWAGGER_SCHEME] //to switch from http for local testing to https for render    
 };
 
 const outputFile = './swagger-output.json';
